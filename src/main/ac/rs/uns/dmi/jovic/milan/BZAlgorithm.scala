@@ -8,7 +8,7 @@ import scala.reflect.ClassTag
 object BZAlgorithm {
 
 
-  def doAlgorithm[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED]) = {
+  def doBZAlgorithm[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED]) = {
 
     val t = System.currentTimeMillis();
 
