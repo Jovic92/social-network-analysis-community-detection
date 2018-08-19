@@ -1,0 +1,52 @@
+version '1.0-SNAPSHOT'
+
+apply plugin: 'scala'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+//mainClassName = 'paket.Random'
+
+repositories {
+    mavenCentral()
+}
+
+idea {
+    project {
+        jdkName = '1.8'
+        languageLevel = '1.8'
+    }
+}
+
+dependencies {
+    compile group: 'org.apache.spark', name: 'spark-core_2.11', version: '2.2.0'
+    compile group: 'org.apache.spark', name: 'spark-sql_2.11', version: '2.2.0'
+    compile group: 'org.apache.spark', name: 'spark-graphx_2.11', version: '2.2.0'
+    compile group: 'org.scala-lang', name: 'scala-library', version: '2.11.11'
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'com.google.guava:guava:12.0.1'
+    }
+}
+
+compileScala.targetCompatibility = "1.8"
+compileScala.sourceCompatibility = "1.8"
+
+
+jar {
+    zip64 true
+//    archiveName = "StackOverFlowSurvey-spark.jar"
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    manifest {
+//        attributes 'Main-Class': 'paket.Random'
+    }
+
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+
+}
