@@ -34,13 +34,15 @@ object BZAlgorithm {
 
     val x: Array[(VertexId, Int)] = vertexRDD2.collect()
 
+    //we compute graphs degree for each vertex and set it in array deg, and set degrees of bin 
     for (node <- x) {
       deg(v) = node._2;
       bin(deg(v)) += 1
       v += 1
     }
 
-    var start: Int = 0; //start=1 in original, but no problem
+    // determining start positions of bins in the array vert
+    var start: Int = 0; 
     var d = 0
     while (d <= md) {
       val num = bin(d)
@@ -49,6 +51,7 @@ object BZAlgorithm {
       d += 1
     }
 
+    //putting vertices into array vert
     var vv = 0
     while (vv < n) {
       pos(vv) = bin(deg(vv))
@@ -57,6 +60,7 @@ object BZAlgorithm {
       vv += 1
     }
 
+    //recovering the starting positions of the bins
     var d2: Integer = md;
 
     while (d2 >= 1) {
@@ -69,6 +73,7 @@ object BZAlgorithm {
     var i: Int = 0
     val x1: Array[(VertexId, Int)] = vertexRDD2.collect()
     val x2: Array[(VertexId, VD)] = vertexRDD.collect()
+    //core decomposition
 
     for (cvrc <- x1) {
       var pom: Int = vert(i); //smallest degree vertex
